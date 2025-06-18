@@ -284,3 +284,212 @@ Editar
 5. **Testes**: Como executar os testes do projeto usando o Jest e Supertest.
 6. **Contribuição**: Como colaborar com o projeto.
 7. **Licença**: Informações sobre a licença do projeto.
+
+__________________
+1. CURSOS
+1.1 - Criar curso (sucesso)
+•	Método: POST
+•	URL: http://localhost:3000/cursos
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "Matemática",
+  "cargaHoraria": 60
+}
+Explicação: Cria um curso válido. Deve retornar status 201.
+________________________________________
+1.2 - Criar curso com dados inválidos
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "",
+  "cargaHoraria": "abc"
+}
+Explicação: Falha na validação. Deve retornar 400.
+________________________________________
+1.3 - Criar curso duplicado
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "Matemática",
+  "cargaHoraria": 60
+}
+Explicação: Já existe um curso com esse nome. Deve retornar 409.
+________________________________________
+1.4 - Listar todos os cursos
+•	Método: GET
+•	URL: http://localhost:3000/cursos
+Explicação: Retorna a lista de cursos cadastrados.
+________________________________________
+1.5 - Buscar curso por ID (sucesso)
+•	URL: http://localhost:3000/cursos/1
+Explicação: Retorna o curso com ID 1.
+________________________________________
+1.6 - Buscar curso por ID inexistente
+•	URL: http://localhost:3000/cursos/999
+Explicação: Deve retornar 404.
+________________________________________
+1.7 - Atualizar curso (sucesso)
+•	Método: PUT
+•	URL: http://localhost:3000/cursos/1
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "Matemática Avançada",
+  "cargaHoraria": 80
+}
+________________________________________
+1.8 - Atualizar curso inexistente
+•	URL: http://localhost:3000/cursos/999
+Explicação: Deve retornar 404.
+________________________________________
+1.9 - Excluir curso (sucesso)
+•	Método: DELETE
+•	URL: http://localhost:3000/cursos/1
+________________________________________
+1.10 - Excluir curso inexistente
+•	URL: http://localhost:3000/cursos/999
+________________________________________
+✅ 2. ALUNOS
+2.1 - Criar aluno (sucesso)
+•	POST http://localhost:3000/alunos
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "João Silva",
+  "email": "joao@email.com"
+}
+________________________________________
+2.2 - Criar aluno com dados inválidos
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "",
+  "email": ""
+}
+________________________________________
+2.3 - Criar aluno com e-mail duplicado
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "Outro João",
+  "email": "joao@email.com"
+}
+________________________________________
+2.4 - Listar alunos (com cursos por nome)
+•	GET http://localhost:3000/alunos
+Explicação: Exibe os alunos com os nomes dos cursos (ou mensagem de "não matriculado").
+________________________________________
+2.5 - Atualizar aluno (sucesso)
+•	PUT http://localhost:3000/alunos/1
+•	Body:
+json
+CopiarEditar
+{
+  "nome": "João Atualizado",
+  "email": "joao@email.com"
+}
+________________________________________
+2.6 - Atualizar aluno inexistente
+•	URL: http://localhost:3000/alunos/999
+________________________________________
+2.7 - Excluir aluno (sucesso)
+•	DELETE http://localhost:3000/alunos/1
+________________________________________
+2.8 - Excluir aluno inexistente
+•	DELETE http://localhost:3000/alunos/999
+________________________________________
+✅ 3. MATRÍCULA
+3.1 - Matricular aluno em curso (sucesso)
+•	POST http://localhost:3000/alunos/1/matricular
+•	Body:
+json
+CopiarEditar
+{
+  "cursoId": 2
+}
+________________________________________
+3.2 - Matricular aluno inexistente
+•	URL: http://localhost:3000/alunos/999/matricular
+________________________________________
+3.3 - Matricular em curso inexistente
+•	Body:
+json
+CopiarEditar
+{
+  "cursoId": 999
+}
+________________________________________
+3.4 - Matricular em curso já matriculado
+•	(Repita o teste 3.1 para gerar erro)
+________________________________________
+✅ 4. REMOVER MATRÍCULA
+4.1 - Remover matrícula com sucesso
+•	DELETE http://localhost:3000/alunos/1/remover-matricula
+•	Body:
+json
+CopiarEditar
+{
+  "cursoId": 2
+}
+________________________________________
+4.2 - Remover matrícula de curso não matriculado
+•	Body:
+json
+CopiarEditar
+{
+  "cursoId": 3
+}
+________________________________________
+4.3 - Remover matrícula de curso inexistente
+•	Body:
+json
+CopiarEditar
+{
+  "cursoId": 999
+}
+________________________________________
+4.4 - Remover matrícula de aluno inexistente
+•	URL: http://localhost:3000/alunos/999/remover-matricula
+
+
+
+
+Para rodar os testes:
+1.	Instale dependências:
+bash
+CopiarEditar
+npm install jest supertest
+2.	Adicione no package.json:
+json
+CopiarEditar
+"scripts": {
+  "test": "jest"
+}
+3.	Execute os testes:
+bash
+CopiarEditar
+npm test
+# API de Cursos e Alunos
+
+Uma API REST simples usando Express.js para gerenciamento de cursos e alunos, com suporte para matrícula e remoção de cursos.
+
+## Scripts
+
+- `npm start`: Inicia o servidor
+- `npm test`: Executa os testes com Jest e Supertest
+
+## Endpoints
+
+- `/cursos`
+- `/alunos`
+- `/alunos/:id/matricular`
+- `/alunos/:id/remover-matricula`
+
